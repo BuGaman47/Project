@@ -1,51 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
-    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="user_booking.css">
-    <title>Booking Page</title>
+    <title>จองห้องประชุม</title>
+    <link rel="stylesheet" type="text/css" href="user_booking.css">
 </head>
 <body>
-    <div id="message"></div>
-    <h1>Booking meeting Room</h1> 
-    <form id="bookingForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        
-        <label for="room_id">Room ID:</label>
-        <input type="value" id="room_id" name="room_id" required>
-        
-        <label for="booking_date">Booking Date:</label>
-        <input type="datetime-local" id="booking_date" name="booking_date" required>
-        
-        <label for="start_time">Start Time:</label>
-        <input type="time" id="start_time" name="start_time" required>
-        
-        <label for="end_time">End Time:</label>
-        <input type="time" id="end_time" name="end_time" required>
-        
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-        
-        <button type="button" onclick="checkRoomStatus()">Check Room Status</button>
-        <input type="submit" value="Book Room">
-    </form>
-    <button type="button" id="register" onclick="window.location.href='Home_p.html';">Back to Home page</button>
-    <table id="roomStatusTable" style="display: none;">
-        <thead>
-            <tr>
-                <th>ชื่อห้องประชุม</th>
-                <th>สถานะ</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-
+    <div class="container">
+        <form id="bookingForm">
+            <div class="form-group">
+                <label>ชื่อผู้จอง</label>
+                <input type="text" id="userName" required>
+            </div>
+    
+            <div class="form-group">
+                <label>เลือกห้องประชุม</label>
+                <select id="roomSelect" class="form-control"></select>
+            </div>
+    
+            <div class="form-group">
+                <label>วันที่จอง</label>
+                <input type="date" id="bookingDate" required>
+            </div>
+    
+            <div class="time-group">
+                <div class="form-group">
+                    <label>เวลาเริ่ม</label>
+                    <input type="time" id="startTime" required>
+                </div>
+                <div class="form-group">
+                    <label>เวลาสิ้นสุด</label>
+                    <input type="time" id="endTime" required>
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label>หัวข้อการจอง</label>
+                <input type="text" id="title" required>
+            </div>
+    
+            <button type="button" onclick="checkAvailability()">ตรวจสอบสถานะห้อง</button>
+    
+            <div id="availability-status"></div>
+            <div id="price"></div>
+    
+            <button type="button" id="confirmBtn" onclick="confirmBooking()" disabled>ยืนยันการจอง</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
     <script src="user_booking.js"></script>
 </body>
 </html>

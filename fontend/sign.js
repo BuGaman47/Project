@@ -5,16 +5,23 @@ document.getElementById("loginForm").addEventListener("submit", async (event) =>
     
     let username = document.querySelector("input[name=username]").value;
     let password = document.querySelector("input[name=password]").value;
-    let role = document.querySelector("input[name=role]:checked").value;
+    let role = document.querySelector("input[name=role]:checked")?.value; // ใช้ optional chaining เพื่อป้องกัน error หากไม่มี radio button ถูกเลือก
     let telephone = document.querySelector("input[name=telephone]").value;
     let messageDOM = document.getElementById('message');
     
     // ตรวจสอบข้อมูลเบื้องต้น
-    if (!username || !password || !role || !telephone) {
-        messageDOM.innerHTML = `<div>กรุณากรอกข้อมูลให้ครบถ้วน</div>`;
+    let errors = [];
+    if (!username) errors.push("ชื่อผู้ใช้");
+    if (!password) errors.push("รหัสผ่าน");
+    if (!role) errors.push("บทบาท");
+    if (!telephone) errors.push("เบอร์โทรศัพท์");
+    
+    if (errors.length > 0) {
+        messageDOM.innerHTML = `<div>กรุณากรอกข้อมูลในช่อง: ${errors.join(", ")}</div>`;
         messageDOM.className = "message danger";
         return;
     }
+    
     try {
         // สร้างข้อมูลผู้ใช้
         const userData = {

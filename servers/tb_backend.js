@@ -165,32 +165,35 @@ app.post('/tb_user', async (req, res) => {
         res.status(500).json({ message: error.message, errors: error.errors || [] });
     }
 }); 
-app.post('/login', async (req, res) => {
-    try {
-        const { username, password,role } = req.body;
-        
-        // ตรวจสอบว่ามีการส่งข้อมูลมาครบหรือไม่
-        if (!username || !password) {
-            return res.status(400).json({ message: 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน' });
+app.post('/login', async (req,res) => {
+    let {username,password} = req.body;
+    //ตรวจสอบว่ามี username / password
+    if(!username || !password){
+        return res.status(400).json({message: 'Username and password are required'});
+    }
+    try{
+        //ค้นหาผู้ใช้จากฐานข้อมูล(mysql)
+        const [user] = await conn.query('SELECT * FROM tb_user WHERE username = ? AND password = ?',[username,password]);
+        //เช็คว่าเจอไหม
+        if(user.length === 0){
+            return res.status(401).json({message: 'Invalid credentials'});
         }
-        
-        // ดึงข้อมูลผู้ใช้จากฐานข้อมูล
-        const [users] = await conn.query('SELECT * FROM tb_user WHERE username = ? AND password = ? AND role = ?', [username, password,role]);
-        
-        // ตรวจสอบว่ามีผู้ใช้ในระบบหรือไม่
-        if (users.length === 0) {
-            return res.status(401).json({ message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' });
-        }
-        
-        // ส่งข้อมูลผู้ใช้กลับไป (ไม่รวมรหัสผ่าน)
-        const user = users[0];
-        delete user.password; // ไม่ส่งรหัสผ่านกลับไป
-        
-        res.json({ message: 'เข้าสู่ระบบสำเร็จ', user });
-        
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ message: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ', error: error.message });
+        //รับข้อมูลของผู้ใช้
+        const users = user[0];
+        const role = users.role;
+        //ส่งข้อมูลกลับไป
+        return res.json({
+            success: true,
+            message: 'Login successful',
+            role: role
+        });
+
+    }catch(error){
+        console.error('Error login: ',error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+        })
     }
 });
 
