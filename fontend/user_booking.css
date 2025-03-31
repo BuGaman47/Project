@@ -1,0 +1,82 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f0f8ff; /* สีพื้นหลัง */
+}
+
+h1 {
+    text-align: center;
+    color: #00008b; /* สีหัวข้อ */
+}
+
+form {
+    background-color: #e0ffff; /* สีพื้นหลังของฟอร์ม */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="value"],
+input[type="datetime-local"],
+input[type="time"] {
+    width: calc(100% - 22px); /* ปรับความกว้างให้พอดี */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"],
+button {
+    background-color: #4682b4; /* สีปุ่ม */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #00008b; /* สีปุ่มเมื่อโฮเวอร์ */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+#message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

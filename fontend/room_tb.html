@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet"> 
+    <title>User Management</title>
+    <link rel="stylesheet" href="admin_st.css">
+</head>
+<body>
+    <div id="message"></div>
+    <h1>Room</h1>
+    <div class="center">
+        <table id="bookig-table">
+        <thead>
+            <h2>Booking</h2>
+            <tr>
+                <th>Name</th>
+                <th>Room ID</th>
+                <th>Booking Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody id="booking"></tbody>
+    </table>
+</div>
+    <div class="position_center">
+        <div class="button-back2register">
+            <button type="button"id="register" onclick="window.location.href='Home_p.html';">Back to Home page
+            </button>
+        
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <script src="room.js"></script>
+</body>
+</html>

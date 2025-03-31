@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="background">
+        <div class="shape shape-blue"></div>
+        <div class="shape shape-orange"></div>
+    </div>
+    
+    <div class="container">
+        <div id="message" class="message"></div>
+        
+        <form id="loginForm">
+            <div class="form-header">
+                <h2>Sign in</h2>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input id="username" class="form-control" name="username" type="text" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" class="form-control" name="password" type="password" placeholder="Enter your password" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Role</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input id="admin" name="role" type="radio" value="admin" required>
+                        <label for="admin">Admin</label>
+                    </div>
+                    <div class="radio-option">
+                        <input id="user" name="role" type="radio" value="user" checked>
+                        <label for="user">User</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="telephone">Telephone</label>
+                <input id="telephone" class="form-control" name="telephone" type="tel" placeholder="Enter your telephone" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" checked>
+            </div>
+            <div class="form-footer">
+                <button type="submit"  class="btn btn-secondary btn-register" onclick="window.location.href='login.html';">
+                    Sign in 
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="sign.js"></script>
+</body>
+</html>
