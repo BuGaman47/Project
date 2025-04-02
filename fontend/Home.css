@@ -1,101 +1,215 @@
-/* ตั้งค่าพื้นฐาน */
-body {
-    font-family: Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
 }
 
-/* ส่วนหัว */
+body {
+    background-color: #f5f5f5;
+    
+}
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #004080;
+    padding: 15px 30px;
+    background-color: #003366;
     color: white;
-    padding: 10px 20px;
 }
-.logo {
-    display: flex;
-    align-items: center;
+
+.menu li {
+    display: inline-block;
+    margin-right: 10px;
 }
+
+.menu li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: #0066cc;
+}
+
 .logo span {
     font-size: 24px;
     font-weight: bold;
 }
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    padding: 0;
-}
-
-.nav-links li {
-    margin: 0 10px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-}
-
 .free-trial-button {
     background-color: #ffcc00;
+    color: #333;
     border: none;
-    padding: 10px 15px;
-    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: bold;
     cursor: pointer;
-    border-radius: 10px;
 }
 
-/* แถบเมนูสีฟ้า */
 .blue-bar {
-    background-color: #0073e6;
-    padding: 10px;
+    background-color: #0066cc;
+    padding: 12px 30px;
     text-align: center;
 }
 
 .blue-bar a {
     color: white;
-    font-size: 18px;
     text-decoration: none;
-    font-weight: bold;
+    font-size: 18px;
 }
 
-/* เนื้อหาหลัก */
 .main-content {
     padding: 30px;
-    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.room-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    justify-items: center;
-    margin-top: 20px;
+h2 {
+    margin-bottom: 20px;
+    color: #333;
 }
 
-.room-card1, .room-card2, .room-card3, .room-card4, .room-card5 {
+/* สถานะห้องประชุม */
+.room-status-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.status-box {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
     background-color: white;
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     text-align: center;
-    max-width: 300px;
+}
+
+.status-box h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.status-number {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border: 2px solid;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+
+.available {
+    color: #28a745;
+    border-color: #28a745;
+}
+
+
+.unavailable {
+    color:rgb(255, 0, 25);
+    border-color:rgb(255, 0, 25);
+}
+
+.total {
+    color: #0066cc;
+    border-color: #0066cc;
+}
+
+/* ส่วนแสดงห้องประชุม */
+.room-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.room-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s;
+}
+
+.room-card:hover {
+    transform: translateY(-5px);
+}
+
+.room-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.room-card h3 {
+    padding: 15px 15px 5px;
+    color: #333;
+}
+
+.room-card p {
+    padding: 5px 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.room-card p strong {
+    color: #333;
 }
 
 .book-button {
-    background-color: #ff6600;
+    display: block;
+    width: 150px;
+    margin: 30px auto 0;
+    padding: 12px 0;
+    background-color: #0066cc;
     color: white;
     border: none;
-    padding: 10px 15px;
+    border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
 .book-button:hover {
-    background-color: #e65c00;
+    background-color: #004999;
+}
+
+.status-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.room-container {
+    position: relative;
+}
+@media screen and (max-width: 768px) {
+    .room-status-container {
+        flex-direction: column;
+    }
+    
+    .status-box {
+        margin: 5px 0;
+    }
+    
+    .room-card {
+        width: 100%;
+    }
 }

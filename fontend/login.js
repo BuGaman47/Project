@@ -13,21 +13,28 @@ const check_info = async () => {
 
       // ตรวจสอบผลลัพธ์จากเซิฟเวอร์
       if (response.data.success) {
-         alert('Login successful');
-         if (response.data.role === 'admin') {
-            window.location.href = 'admin_db.html'; // ไปหน้า admin
-         } else if (response.data.role === 'user') {
-            window.location.href = 'Home_p.html'; // ไปหน้า employee
+         alert(response.data.message);
+
+         // เช็คว่าเป็น Admin หรือ User
+         if (response.data.isAdmin) {
+            console.log("Redirecting to home.html...");
+            window.location.href = 'admin_db.html'; // เปลี่ยนหน้าไปที่ home.html
+         } else {
+            console.log("Redirecting to home_User.html...");
+            window.location.href = 'Home_p.html'; // เปลี่ยนหน้าไปที่ home_User.html
          }
       } else {
-         console.log('Invalid credentials:', response.data.message);
-         alert('Invalid username or password!');
+         alert(response.data.message || 'เบอร์โทรหรือรหัสผ่านไม่ถูกต้อง!');
       }
    } catch (error) {
-      console.error('Error login:', error);
-      alert('Username or password is incorrect. Please try again.');
+      console.error('เกิดข้อผิดพลาดระหว่างเข้าสู่ระบบ:', error);
+      alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+   } finally {
+      // เปิดปุ่มกลับหลังจากทำงานเสร็จ
+      loginButton.disabled = false;
+      loginButton.innerText = "เข้าสู่ระบบ";
    }
-}
+};
 
 // Event listener สำหรับฟอร์ม login
 document.getElementById("loginForm").addEventListener("submit", async function(event) {

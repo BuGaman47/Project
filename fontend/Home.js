@@ -1,40 +1,37 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // ดึงปุ่มเมนูและเมนู
-    const menuButton = document.querySelector('.menu-button');
-    const nav = document.querySelector('.nav');
+// เรียกฟังก์ชัน updateRoomStatus เมื่อหน้าเว็บโหลดเสร็จ
+    updateRoomStatus();
 
-    // เมื่อคลิกปุ่มเมนู
-    menuButton.addEventListener('click', function() {
-        // สลับการแสดงผลของเมนู
-        if (nav.style.display === 'flex') {
-            nav.style.display = 'none';
-        } else {
-            nav.style.display = 'flex';
+    // ตั้งค่าให้เรียกฟังก์ชัน updateRoomStatus ทุกๆ 5 วินาที
+    setInterval(updateRoomStatus, 1000);
+
+    // ใช้ event delegation เพื่อรองรับปุ่มที่เพิ่มใหม่
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('book-button')) {
+            const roomCard = event.target.closest('.room-card');
+            if (roomCard) {
+                const roomName = roomCard.querySelector('h3').textContent;
+                alert('คุณได้จอง ' + roomName + ' แล้ว!');
+                window.location.href = 'user_bk.html';
+            }
         }
-    });
-
-    // ป้องกันไม่ให้เมนูหายไปเมื่อขยายหน้าจอ
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            nav.style.display = 'flex';
-        } else {
-            nav.style.display = 'none';
-        }
-    });
-
-    // เพิ่มฟังก์ชันการจองห้อง
-    const bookButtons = document.querySelectorAll('.book-button');
-
-    bookButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            // ดึงข้อมูลห้องจาก card
-            const roomCard = button.closest('.room-card');
-            const roomName = roomCard.querySelector('h3').textContent;
-
-            // แสดงข้อความยืนยัน
-            alert('คุณได้จอง ' + roomName + ' แล้ว!');
-
-            // คุณสามารถเพิ่มโค้ดสำหรับการส่งข้อมูลการจองไปยังเซิร์ฟเวอร์ได้ที่นี่
-        });
     });
 });
+
+// ฟังก์ชันอัปเดตสถานะห้อง
+function updateRoomStatus() {
+    fetch('http://localhost:9999/check-room-status')
+        .then(response => response.json())
+        .then(data => {
+            if (data.available !== undefined && data.unavailable !== undefined && data.total !== undefined) {
+                document.querySelector('.status-number.available').textContent = data.available;
+                document.querySelector('.status-number.unavailable').textContent = data.unavailable;
+                document.querySelector('.status-number.total').textContent = data.total;
+            } else {
+                console.error("ข้อมูลสถานะห้องไม่สมบูรณ์:", data);
+            }
+        })
+        .catch(error => {
+            console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสถานะห้อง:", error);
+        });
+}

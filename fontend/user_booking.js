@@ -8,7 +8,7 @@ async function loadRooms() {
         const response = await axios.get('http://localhost:9999/tb_room');
         const rooms = response.data;
 
-        const select = document.getElementById('roomSelect');
+        const select = document.getElementById('room_id');
         rooms.forEach(room => {
             const option = new Option(`${room.name} (${room.capacity})`, room.id);
             option.dataset.rate = getRoomRate(room.name); // กำหนดราคาตามขนาดห้อง
@@ -40,10 +40,10 @@ function getRoomRate(roomName) {
 
 // ตรวจสอบสถานะห้องและคำนวณราคา
 async function checkAvailability() {
-    const date = document.getElementById('bookingDate').value;
-    const startTime = document.getElementById('startTime').value;
-    const endTime = document.getElementById('endTime').value;
-    const roomId = document.getElementById('roomSelect').value;
+    const date = document.getElementById('booking_date').value;
+    const startTime = document.getElementById('start_time').value;
+    const endTime = document.getElementById('end_time').value;
+    const roomId = document.getElementById('room_id').value;
 
     try {
         if (!date || !startTime || !endTime || !roomId) {
@@ -58,13 +58,13 @@ async function checkAvailability() {
             const selectedRoom = roomStatuses[0]; // เลือกห้องแรกที่ได้
 
             if (selectedRoom) {
-                const roomRate = document.querySelector(`#roomSelect option[value="${roomId}"]`).dataset.rate;
+                const roomRate = document.querySelector(`#room_id option[value="${roomId}"]`).dataset.rate;
                 displayStatus(selectedRoom.status === 'ว่าง', roomRate);
             } else {
                 alert('ไม่พบข้อมูลห้อง');
             }
         } else {
-            const roomRate = document.querySelector(`#roomSelect option[value="${roomId}"]`).dataset.rate;
+            const roomRate = document.querySelector(`#room_id option[value="${roomId}"]`).dataset.rate;
             displayStatus(true, roomRate); // กำหนดสถานะว่างและราคาเริ่มต้น
             alert('ห้องว่าง');
         }
@@ -85,8 +85,8 @@ function displayStatus(available, rate) {
         `<span style="color:red">ห้องไม่ว่าง</span>`;
 
     if (available) {
-        const start = document.getElementById('startTime').value;
-        const end = document.getElementById('endTime').value;
+        const start = document.getElementById('start_time').value;
+        const end = document.getElementById('end_time').value;
 
         if (start && end) {
             const startHour = parseInt(start.split(':')[0]);
@@ -94,9 +94,6 @@ function displayStatus(available, rate) {
 
             if (!isNaN(startHour) && !isNaN(endHour)) { // ตรวจสอบว่าเป็นตัวเลขหรือไม่
                 let diff = endHour - startHour;
-                if (diff < 0) {
-                    diff = 0; // หรือแสดงข้อความผิดพลาด
-                }
                 const totalPrice = diff * rate;
 
                 priceDiv.textContent = `ราคารวม: ${totalPrice} บาท`;
@@ -117,11 +114,11 @@ function displayStatus(available, rate) {
 
 // ยืนยันการจอง
 async function confirmBooking() {
-    const name = document.getElementById('userName').value;
-    const roomId = document.getElementById('roomSelect').value;
-    const bookingDate = document.getElementById('bookingDate').value;
-    const startTime = document.getElementById('startTime').value;
-    const endTime = document.getElementById('endTime').value;
+    const name = document.getElementById('username').value;
+    const roomId = document.getElementById('room_id').value;
+    const bookingDate = document.getElementById('booking_date').value;
+    const startTime = document.getElementById('start_time').value;
+    const endTime = document.getElementById('end_time').value;
     const title = document.getElementById('title').value;
 
     try {
@@ -137,6 +134,11 @@ async function confirmBooking() {
         const response = await axios.post('http://localhost:9999/tb_booking', bookingData);
         alert(response.data.message);
         // หลังจากจองสำเร็จ อาจจะรีโหลดข้อมูลหรือเคลียร์ฟอร์ม
+        const submitButton = document.getElementById('submit-booking');
+if (submitButton) {
+    submitButton.addEventListener('click', submitData);
+}
+
     } catch (error) {
         console.error('Error booking room:', error);
         alert('Failed to book room.');

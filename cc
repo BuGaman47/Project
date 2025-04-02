@@ -108,3 +108,51 @@ button:hover {
 
 }
 
+async function login() {
+   const messageDOM = document.getElementById('message'); // ตัว DOM สำหรับข้อความแจ้งเตือน
+ 
+   try {
+       const username = document.getElementById('username').value.trim();
+       const password = document.getElementById('password').value;
+ 
+       // ล้างข้อความแจ้งเตือนก่อนตรวจสอบ
+       messageDOM.innerHTML = '';
+       messageDOM.className = '';
+ 
+       // ตรวจสอบว่ากรอกข้อมูลครบถ้วนหรือไม่
+       if (!username || !password) {
+           messageDOM.innerHTML = "<div>Please enter your username and password.</div>";
+           messageDOM.className = "message danger";
+           return;
+       }
+ 
+       const res = await fetch('http://localhost:9999/login', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({ username, password }),
+       });
+ 
+       const data = await res.json();
+ 
+       if (res.ok) {
+         // แสดงข้อความแจ้งเตือนความสำเร็จ
+         messageDOM.innerHTML = "<div>Login successful</div>";
+         messageDOM.className = "message success";
+         localStorage.setItem('currentUser', data.username);
+     
+         // หน่วงเวลา 3 วินาทีก่อนเปลี่ยนหน้า
+         setTimeout(() => {
+             window.location.href = 'Home_p.html'; // เปลี่ยนหน้าเมื่อล็อกอินสำเร็จ
+         }, 2000);
+     } else {
+         // แสดงข้อความแจ้งเตือนข้อผิดพลาด
+         messageDOM.innerHTML = "<div>Login error: " + (data.message || 'Invalid credentials.') + "</div>";
+         messageDOM.className = "message danger";
+     }
+     
+   } catch (error) {
+       console.error('An error occurred during login.:', error);
+       messageDOM.innerHTML = "<div>An error occurred logging in.</div>";
+       messageDOM.className = "message danger";
+   }
+ }

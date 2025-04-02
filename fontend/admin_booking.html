@@ -9,22 +9,32 @@
     <link rel="stylesheet" href="admin_st.css">
 </head>
 <body>
-    <div class="navbar" id="adminDashboard">
-        <h2>Admin Dashboard</h2>
-        <div class="section">
-            <a href="admin_booking.html" class="button">จัดการในการจอง</a>
-        </div>
-        <div class="section">
-            <a href="admin_user.html" class="button">จัดการผู้ใช้งาน</a>
-        </div>
+    <div id="message"></div>
+    <h2>Booking Management</h2>
+    <table id="booking-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Room ID</th>
+                <th>Booking Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="booking"></tbody>
+    </table>
     <div class="position_center">
         <div class="button-back2register">
-            <button type="button"  onclick="window.location.href='Home_p.html';">Back to Home</button>
+            <button type="button"  onclick="window.location.href='admin_db.html';">Back to Home</button>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
-    <script src="admin.js"></script>
-    
+    <script src="admin_booking.js"></script>
+
 </body>
 </html>
+
